@@ -1,5 +1,9 @@
 {% extends 'ad/create_edit_form.html.twig' %}
 
+{% block title %}
+    Create new ad - {{ parent() }}
+{% endblock %}
+
 {% block button %}
     <button class="btn btn-primary" type="submit">Create</button>
 {% endblock %}
