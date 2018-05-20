@@ -22,11 +22,11 @@ class UserService
 
     /**
      * User constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
+        $this->em = $em;
     }
 
     /**

@@ -2,6 +2,88 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #efefef
+        }
+        .ad {
+            -moz-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            -webkit-transition: all 0.2s;
+        }
 
+        .ad:hover {
+            transform: scale(1.007);
+            box-shadow: 2px 2px 15px #0a8be6;
+        }
+
+        #logout {
+            background-color: #0000af;
+        }
+        #logout:hover {
+            background-color: #00007f!important;
+        }
+    </style>
+{% endblock %}
+
+{% block nav %}
+    <nav class="navbar navbar-light fixed-top" style="background-color: #0a56e6;">
+        <a class="navbar-brand text-white">Ads</a>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <a href="{{ path('create_ad') }}"
+               class="btn btn-primary"
+               style="border: 1px solid #FFFFFF; border-radius: 5px"
+            >
+                Create new ad
+            </a>
+        {% endif %}
+        <form method="post">
+            <div class="form-inline">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <span class="text-white">Login as <span class="col-1"></span>{{ app.user.username }}</span><div class="col-1"></div>
+                    <a href="{{ path('logout') }}" id="logout" class="btn btn-outline my-2 my-sm-0 text-white">
+                        Logout
+                    </a>
+                {% else %}
+                    {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.plainPassword) }}
+                    <button id="logout" class="btn btn-outline my-2 my-sm-0 text-white" type="submit">Login</button>
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        </form>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    {% for ad in pagination %}
+        <div class="ad">
+            <div class="shadow-none p-4 mb-2 bg-white">
+                <div>
+                    <a href="{{ path('show_ad', {'id': ad.id, 'page': page}) }}">
+                        <h3>
+                            {{ ad.title }}
+                        </h3>
+                    </a><hr>
+                    <p style="word-wrap: break-word">
+                        {{ ad.description }}
+                    </p>
+                    Author: {{ ad.user.username }}
+                    <span style="float: right; text-align: right">Createt at: {{ ad.createdAt|date('d-m-Y H:i:s')  }}</span><br>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.username == ad.user.username %}
+                        <div class="btn-group" role="group" aria-label="Basic">
+                            <a href="{{ path('edit_ad', {'id': ad.id}) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ path('delete_ad', {'id': ad.id, 'page': page}) }}" class="btn btn-primary">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

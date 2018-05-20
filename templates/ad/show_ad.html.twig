@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="shadow-lg p-4 mb-2 bg-white">
+        <div>
+            <h3 style="color: #0000e3">{{ ad.title }}</h3><hr>
+            <div style="word-wrap: break-word">
+                {{ ad.description }}
+            </div>
+            Author: {{ ad.user.username }}
+            <span style="float: right; text-align: right">Createt at: {{ ad.createdAt|date('d-m-Y H:i:s')  }}</span><br>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.username == ad.user.username %}
+                <div class="btn-group" role="group" aria-label="Basic">
+                    <a href="{{ path('edit_ad', {'id': ad.id}) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ path('delete_ad', {'id': ad.id, 'page': page}) }}" class="btn btn-primary">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

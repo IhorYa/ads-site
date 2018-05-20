@@ -15,7 +15,11 @@ class AdType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'rows' => 7,
+                ],
+            ])
         ;
     }
 

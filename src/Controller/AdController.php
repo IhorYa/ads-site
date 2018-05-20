@@ -32,16 +32,31 @@ class AdController extends Controller
             $em->persist($ad);
             $em->flush();
 
-            return $this->redirectToRoute('home', ['id' => $ad->getId()]);
+            return $this->redirectToRoute('show_ad', ['id' => $ad->getId()]);
         }
 
-        return $this->render('', [
+        return $this->render('ad/create_ad.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/edit/{id}", name="edit_ad")
+     * @Route("/{id}", name="show_ad", requirements={"id": "\d+"})
+     * @param Ad $ad
+     * @param Request $request
+     * @return Response
+     */
+    public function showAd(Ad $ad, Request $request)
+    {
+        $page = $request->query->getInt('page', 1);
+        return $this->render('ad/show_ad.html.twig', [
+            'ad' => $ad,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit_ad", requirements={"id": "\d+"})
      * @param Ad $ad
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -56,16 +71,16 @@ class AdController extends Controller
             $em->persist($ad);
             $em->flush();
 
-            return $this->redirectToRoute('home', ['id' => $ad->getId()]);
+            return $this->redirectToRoute('show_ad', ['id' => $ad->getId()]);
         }
 
-        return $this->render('', [
+        return $this->render('ad/edit_ad.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/delete/{id}", name="delete_ad")
+     * @Route("/delete/{id}", name="delete_ad", requirements={"id": "\d+"})
      * @param Ad $ad
      * @param Request $request
      * @param EntityManagerInterface $em

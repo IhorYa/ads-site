@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="shadow-lg p-4 mb-2 bg-white">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {% block button %}{% endblock %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
