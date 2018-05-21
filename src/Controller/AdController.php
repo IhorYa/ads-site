@@ -64,7 +64,7 @@ class AdController extends Controller
      */
     public function editAd(Ad $ad, Request $request, EntityManagerInterface $em)
     {
-        if (!$this->checkAuthor($ad)) {
+        if ($this->checkAuthor($ad)) {
             return $this->redirectToRoute('home');
         }
         $form = $this->createForm(AdType::class, $ad);
@@ -91,7 +91,7 @@ class AdController extends Controller
      */
     public function delete(Ad $ad, Request $request, EntityManagerInterface $em)
     {
-        if (!$this->checkAuthor($ad)) {
+        if ($this->checkAuthor($ad)) {
             return $this->redirectToRoute('home');
         }
         $em->remove($ad);
@@ -111,7 +111,7 @@ class AdController extends Controller
         $adAuthor = $ad->getUser()->getUsername();
         if ($currentUser != $adAuthor) {
             $this->addFlash('warning', "You can edit or delete only your's ads!");
-            return false;
+            return true;
         }
     }
 }

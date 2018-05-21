@@ -23,6 +23,8 @@ _php bin/console doctrine:migrations:migrate_
 #### But you can still download data to the database using fixtures
 _php bin/console doctrine:fixtures:load_
 
+Password == Username
+
 By default the load command purges the database, removing all data from every table. To append your fixtures' data add the --append option.
 
 #### If you do not have a server, you can run it
