@@ -60,6 +60,10 @@
 {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">{{ message }}</div>
+    {% endfor %}
+
     {% for ad in pagination %}
         <div class="ad">
             <div class="shadow-none p-4 mb-2 bg-white">

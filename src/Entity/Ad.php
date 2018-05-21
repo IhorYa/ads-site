@@ -22,6 +22,7 @@ class Ad
      * @var string
      * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank()
+     * @Assert\Length(max=250, maxMessage="Title cannot be longer than {{ limit }} characters")
      */
     private $title;
 

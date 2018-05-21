@@ -25,6 +25,7 @@ class User implements UserInterface, \Serializable
      * @var string
      * @ORM\Column(type="string", length=250, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Length(max=250, maxMessage="Username cannot be longer than {{ limit }} characters")
      */
     private $username;
 
